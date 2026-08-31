@@ -2,7 +2,6 @@
 #define EVENT_CONTROL_H
 
 #include "Subject.h"
-
 #include <string>
 
 class Notice;
@@ -10,16 +9,10 @@ class EventGroup;
 class EventComponent;
 
 /**
- * @brief Central control room of the event (GoF Concrete Subject).
+ * @brief Central control room managing event-wide broadcasts.
  *
- * EventControl issues notices by calling broadcast(), which pushes the notice
- * to every registered observer. It holds a non-owning association to the root
- * EventGroup so it can report aggregate statistics; EventControl itself is NOT
- * part of the Composite tree and owns none of the event components.
- *
- * The root group is normally registered here; any leaf can also register here
- * directly (monotask observer) to show that observation is independent of
- * containment.
+ * Dispatches notices to registered observers via broadcast(). Maintains
+ * a reference to the root EventGroup to query aggregate statistics.
  */
 class EventControl : public Subject
 {
@@ -29,37 +22,31 @@ private:
 
 public:
     /**
-     * @brief Constructs the event control room.
-     *
-     * @param name Display name of the control room.
-     * @param root Pointer to the root EventGroup (non-owning). May be null.
+     * @brief Constructs the EventControl manager.
+     * @param name Name of the control room.
+     * @param root Pointer to the root EventGroup tree.
      */
     EventControl(const std::string& name, EventGroup* root);
 
     ~EventControl() override;
 
-    /** @return Display name of the control room. */
     std::string getName() const;
 
     /**
-     * @brief Broadcasts a notice to every registered observer (push model).
-     *
-     * @param notice The notice to push to all registered observers.
+     * @brief Sends a notice to all currently attached observers.
+     * @param notice The notice object to broadcast.
      */
     void broadcast(const Notice& notice);
 
-    /** @return The associated root group (non-owning). */
     EventGroup* getRoot() const;
 
     /**
-     * @brief Prints aggregate capacity of the whole event via the root.
-     *
-     * Performs a Composite traversal/query through the Component interface.
+     * @brief Calculates and prints overall capacity across the component hierarchy.
      */
     void printAggregateCapacity() const;
 
     /**
-     * @brief Prints the full status of the event via the root tree.
+     * @brief Triggers a status report for the entire tree structure.
      */
     void printEventStatus() const;
 };

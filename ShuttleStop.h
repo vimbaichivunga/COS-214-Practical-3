@@ -2,38 +2,30 @@
 #define SHUTTLE_STOP_H
 
 #include "EventUnit.h"
-
 #include <string>
 
 /**
- * @brief A shuttle stop for the event transport loop (concrete Leaf).
- *
- * On a weather notice the shuttle changes route to an inland route and keeps
- * running; transport is paused only by an explicit pause notice.
+ * @brief Shuttle station managing festival transport routes.
  */
 class ShuttleStop : public EventUnit
 {
 public:
     /**
-     * @brief Constructs a shuttle stop.
-     *
-     * @param name Display name of the stop.
-     * @param capacity Number of shuttles that can queue at once.
-     * @param routeName Current route served by this stop.
+     * @brief Constructs a ShuttleStop unit.
+     * @param name Name of the stop.
+     * @param capacity Maximum queue capacity for shuttles.
+     * @param routeName Designated transport route.
      */
-    ShuttleStop(const std::string& name, int capacity,
-                const std::string& routeName);
+    ShuttleStop(const std::string& name, int capacity, const std::string& routeName);
 
     ~ShuttleStop() override;
 
     /**
-     * @brief ShuttleStop-specific reaction: reroute on weather notices.
-     *
-     * @param notice The notice pushed by the parent group.
+     * @brief Reroutes to inland paths during severe weather notices.
+     * @param notice Incoming notification.
      */
     void update(const Notice& notice) override;
 
-    /** @return The name of the current route. */
     std::string getRoute() const;
 
 private:

@@ -7,13 +7,7 @@ class Observer;
 class Notice;
 
 /**
- * @brief Abstract participant of the Observer collaboration (GoF Subject).
- *
- * The Subject owns NO observers: registration is non-owning, so an observer
- * outlives its registration time and must be detached before destruction.
- * Registration policy: duplicate attach() requests are ignored; detach() of an
- * observer that is not registered is a silent no-op. notify() iterates a
- * snapshot of the list so observers may attach/detach mid-notification.
+ * @brief Base subject managing dynamic observer registrations.
  */
 class Subject
 {
@@ -25,31 +19,25 @@ public:
     virtual ~Subject();
 
     /**
-     * @brief Registers an observer to receive future notifications.
-     *
-     * @param observer Observer to register. Must be non-null.
-     * @return True if the observer was newly added, false if already registered.
+     * @brief Attaches an observer if it is not already registered.
+     * @param observer Pointer to the observer instance.
+     * @return True if attached, false if already present.
      */
     bool attach(Observer* observer);
 
     /**
-     * @brief Deregisters an observer.
-     *
-     * @param observer Observer to remove. Ignored if not registered.
+     * @brief Detaches an observer if registered.
+     * @param observer Pointer to the observer to remove.
      */
     void detach(Observer* observer);
 
     /**
-     * @brief Pushes a notice to every currently-registered observer.
-     *
-     * @param notice The notice to broadcast. Pushed, not pulled.
+     * @brief Broadcasts a notice to all currently attached observers.
+     * @param notice The notice object to send.
      */
     void notify(const Notice& notice);
 
-    /** @return Number of currently-registered observers. */
     int observerCount() const;
-
-    /** @return True if the observer is currently registered here. */
     bool isRegistered(const Observer* observer) const;
 };
 

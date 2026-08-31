@@ -2,25 +2,19 @@
 #define STAGE_H
 
 #include "EventUnit.h"
-
 #include <string>
 
 /**
- * @brief A performance stage (concrete Leaf).
- *
- * An outdoor stage pauses its performance when a safety notice arrives and
- * resumes on a resume notice. On a capacity alert it checks its own crowd
- * limit and may close the pit if exceeded.
+ * @brief Event stage hosting performances.
  */
 class Stage : public EventUnit
 {
 public:
     /**
-     * @brief Constructs a stage.
-     *
-     * @param name Display name of the stage.
-     * @param capacity Nominal spectator capacity.
-     * @param currentLineUp Name of the performance currently booked.
+     * @brief Constructs a Stage unit.
+     * @param name Name of the stage.
+     * @param capacity Spectator capacity limit.
+     * @param currentLineUp Performance act currently scheduled.
      */
     Stage(const std::string& name, int capacity,
           const std::string& currentLineUp);
@@ -28,13 +22,11 @@ public:
     ~Stage() override;
 
     /**
-     * @brief Stage-specific reaction: pause performance on safety notices.
-     *
-     * @param notice The notice pushed by the parent group.
+     * @brief Pauses performances upon receiving a safety notice.
+     * @param notice Incoming notification.
      */
     void update(const Notice& notice) override;
 
-    /** @return The name of the booked performance. */
     std::string getLineUp() const;
 
 private:
