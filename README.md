@@ -21,5 +21,3 @@ sub-zone → unit).
 Vimbai Chivunga u25136608
 Chelsy Whata u25657764
 Sudud Abughazaleh u25282728
-
-## Building
