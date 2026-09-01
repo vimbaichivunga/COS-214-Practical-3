@@ -18,8 +18,8 @@ sub-zone → unit).
 
 ## Team
 
-- [Name] — [Student Number]
-- [Name] — [Student Number]
-- [Name] — [Student Number]
+Vimbai Chivunga u25136608
+Chelsy Whata u25657764
+Sudud Abughazaleh u25282728
 
 ## Building
